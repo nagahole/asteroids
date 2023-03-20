@@ -7,9 +7,18 @@ int main()
     return 0;
 }
 
+
+#define TOLERANCE 1
+void asteroid_tolerance()
+{
+    char data[SIZEOF_ASTEROID_CLUSTER(1)];    
+    asteroid_cluster_create(data, 1, TOLERANCE);
+    assert(FLOAT_CMP(get_tolerance(data), TOLERANCE, TOLERANCE));
+    return;
+}
+
 #define STATIC_POLY 1
 #define STATIC_N_AST 1
-#define TOLERANCE 1
 void asteroid_static()
 {
     // Asteroid sits at (100, 100) forever

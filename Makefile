@@ -16,7 +16,7 @@ BUILDDIR := build
 OBJFILES := 
 SRCFILES := 
 
-LIBS := -I${LIBDIR}
+LIBS := -I${LIBDIR} -lm
 
 ##################################################
 # TEST BUILDER

@@ -61,11 +61,10 @@ void test_scan_static()
     float* dist = scan(scanner, cluster);
    
     // Check the output 
-    assert(FLOAT_CMP(dist[0], 141, TOLERANCE));
-    assert(FLOAT_CMP(dist[1], 111, TOLERANCE));
-    assert(FLOAT_CMP(dist[2], 100, TOLERANCE));
-    assert(FLOAT_CMP(dist[3], 111, TOLERANCE));
-    assert(FLOAT_CMP(dist[4], 141, TOLERANCE));
-
+    int vals[N_SCANNER_POSITIONS_STATIC_TEST] = {141, 111, 100, 111, 141};
+    for (int i = 0; i < 5; i++)
+    {
+        assert(FLOAT_CMP(dist[i], vals[i], TOLERANCE));
+    }
     return;
 }

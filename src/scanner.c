@@ -1,17 +1,18 @@
 #include "scanner.h"
-#define NULL  ((void *) 0)
+#define NULL ((void *) 0)
 
 // Constructor
 /*
  * scanner_create
  * Constructor for the scanner object
- * 
  * :: const int n_scanners :: number of scanner positions
  * :: scanner_pos :: X positions of the scanners 
- *
  * All operations act in place
  */
-void scanner_create(void* data, const int n_scanners, float* scanner_pos)
+void scanner_create(
+        void* data,
+        const int n_scanners,
+        float* scanner_pos)
 {
     // TODO
 }

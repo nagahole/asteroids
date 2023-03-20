@@ -2,11 +2,10 @@
 #define SCANNER_H 1
 
 #include "asteroid_cluster.h"
-#define SIZEOF_SCANNER(n) (sizeof(int) + sizeof(float*) + sizeof(float) * n)
-
+#define SIZEOF_SCANNER(n) (1) // TODO
 /*
  * scanner_create
- * Creates a scanner object
+ * Creates a collection of scanners
  * :: void* data            :: Location to store the scanner
  * :: const inst n_scanners :: Number of scanners in this object
  * :: float* x_arr          :: The position of each scanner along y = 0
