@@ -62,7 +62,7 @@ all: tests
 
 tests: ${BUILDDIR} ${TEST_BUILD_DIR} ${TEST_CASES}
 
-${TEST_DIR}/% : ${TEST_CASE_DIR}/%.c ${TEST_OBJFILES} ${OBJFILES} 
+${TEST_DIR}/% : ${TEST_CASE_DIR}/%.c ${OBJFILES} 
 	@echo "[Building Test Case]" $@
 	${CC} ${CFLAGS} ${LIBS} ${TEST_LIBS} -o $@ $^
 
