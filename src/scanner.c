@@ -48,13 +48,9 @@ float* get_scanner_positions(void* scanner)
 
 /*
  * scan
- * Performs a scan, setting the distances in place
- *
- * :: void* scanners :: Pointer to a scanner object
- * :: void* asteroid_cluster :: Pointer to the cluster to scan
- * :: float* distances :: Array of distances to populate
- *
- * Acts in place, nothing is returned
+ * Performs a scan
+ * :: void* scanner_array         :: Scanner object
+ * :: void* asteroid_cluster :: Asteroid cluster to scan
  */
 float* scan(
         void* scanners,
