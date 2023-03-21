@@ -28,7 +28,6 @@ LIBS := -I${LIBDIR}
 ###################################################
 
 TEST_DIR := test
-TEST_CASE_DIR := ${TEST_DIR}/test_cases
 TEST_SRC_DIR := ${TEST_DIR}/src
 TEST_LIB_DIR := ${TEST_DIR}/lib
 TEST_BUILD_DIR := ${BUILDDIR}/tests
@@ -38,8 +37,7 @@ TEST_LIBS := -I${TEST_LIB_DIR}
 TEST_SRCFILES := $(wildcard ${TEST_SRC_DIR}/*.c)
 TEST_OBJFILES := $(patsubst ${TEST_SRC_DIR}/%.c, ${TEST_BUILD_DIR}/%.o, ${TEST_SRCFILES})
 
-TEST_CASE_FILES := $(wildcard ${TEST_CASE_DIR}/*.c)
-TEST_CASES := $(patsubst ${TEST_CASE_DIR}/%.c, ${TEST_DIR}/%, ${TEST_CASE_FILES})
+TEST_CASES := $(patsubst ${TEST_BUILD_DIR}/%.o, ${TEST_DIR}/%, ${TEST_OBJFILES})
 
 MKDIR_P = mkdir -p
 
@@ -47,11 +45,10 @@ MKDIR_P = mkdir -p
 # Compile files
 ###############################################
 
-all: tests
+all: ${BUILDDIR} ${OBJFILES} tests
 
 .PHONY: all
 .PHONY: run_tests
-.PHONY: tests
 .PHONY: clean
 .PRECIOUS: $(OBJFILES) $(TEST_OBJFILES)
 
@@ -59,27 +56,28 @@ ${BUILDDIR}/%.o : ${SRCDIR}/%.c
 	@echo "[Building Object File]" $@
 	@${CC} ${CFLAGS} ${LIBS} -c -o $@ $^
 
+echo:
+	@echo ${TEST_OBJFILES}
+
 #################
 # Tests
 # DO NOT MODIFY THE FOLLOWING BLOCK
 # YOU MIGHT BREAK THE AUTO-MARKER
 #################
 
-tests: ${BUILDDIR} ${TEST_BUILD_DIR} ${TEST_OBJFILES} ${TEST_CASES} 
+tests: ${BUILDDIR} ${TEST_BUILD_DIR} ${TEST_CASES}
 
-${TEST_DIR}/%: ${TEST_CASE_DIR}/%.c ${OBJFILES} 
+${TEST_DIR}/% : ${TEST_BUILD_DIR}/%.o ${OBJFILES} 
 	@echo "[Building Test Case]" $@
 	@${CC} ${CFLAGS} ${LIBS} ${TEST_LIBS} -o $@ $^
 
 ${TEST_BUILD_DIR}/%.o: ${TEST_SRC_DIR}/%.c
 	@echo "[Building Test]" $@
-	@${CC} ${CFLAGS} ${LIBS} ${TEST_LIBS} -c -o $@ $^   
+	@${CC} ${CFLAGS} ${LIBS} ${TEST_LIBS} -c -o $@ $^    
 
 #################
 # Creates the build directories we need
 # You may add other build directories
-# But it is essential that the climber.o file
-# Is found at build/climber.o
 #################
 
 ${BUILDDIR}:
@@ -99,12 +97,7 @@ run_tests: tests
 		echo "" ; \
 	done
 
-
-
-
-
 #################
-
 
 clean:
 	rm -f ${BUILDDIR}/*.o *.out

@@ -11,4 +11,10 @@ double flatland_cos(float x);
 
 double flatland_sqrt(float x);
 
+double flatland_pow(float base, int pow);
+
+double flatland_abs(float n);
+
+double flatland_factorial(int n);
+
 #endif
