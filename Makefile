@@ -2,8 +2,8 @@
 # C
 ###############################################
 
-CC := 
-CFLAGS := 
+CC := gcc
+CFLAGS := -Wall -Wvla -g
 
 ###############################################
 # Detect files and set paths accordingly
@@ -13,10 +13,10 @@ LIBDIR := lib
 SRCDIR := src
 BUILDDIR := build
 
-OBJFILES := 
-SRCFILES := 
+SRCFILES := ${wildcard ${SRCDIR}/*.c}
+OBJFILES := ${patsubst ${SRCDIR}/%.c, ${BUILDDIR}/%.o, ${SRCFILES}}
 
-LIBS := -I${LIBDIR} -lm
+LIBS := -I${LIBDIR}
 
 ##################################################
 # TEST BUILDER
@@ -53,6 +53,11 @@ all: tests
 .PHONY: run_tests
 .PHONY: tests
 .PHONY: clean
+.PRECIOUS: $(OBJFILES) $(TEST_OBJFILES)
+
+${BUILDDIR}/%.o : ${SRCDIR}/%.c
+	@echo "[Building Object File]" $@
+	@${CC} ${CFLAGS} ${LIBS} -c -o $@ $^
 
 #################
 # Tests
@@ -60,15 +65,15 @@ all: tests
 # YOU MIGHT BREAK THE AUTO-MARKER
 #################
 
-tests: ${BUILDDIR} ${TEST_BUILD_DIR} ${TEST_CASES}
+tests: ${BUILDDIR} ${TEST_BUILD_DIR} ${TEST_OBJFILES} ${TEST_CASES} 
 
-${TEST_DIR}/% : ${TEST_CASE_DIR}/%.c ${OBJFILES} 
+${TEST_DIR}/%: ${TEST_CASE_DIR}/%.c ${OBJFILES} 
 	@echo "[Building Test Case]" $@
-	${CC} ${CFLAGS} ${LIBS} ${TEST_LIBS} -o $@ $^
+	@${CC} ${CFLAGS} ${LIBS} ${TEST_LIBS} -o $@ $^
 
 ${TEST_BUILD_DIR}/%.o: ${TEST_SRC_DIR}/%.c
 	@echo "[Building Test]" $@
-	${CC} ${CFLAGS} ${LIBS} ${TEST_LIBS} -c -o $@ $^   
+	@${CC} ${CFLAGS} ${LIBS} ${TEST_LIBS} -c -o $@ $^   
 
 #################
 # Creates the build directories we need
@@ -78,17 +83,21 @@ ${TEST_BUILD_DIR}/%.o: ${TEST_SRC_DIR}/%.c
 #################
 
 ${BUILDDIR}:
-	${MKDIR_P} ${BUILDDIR}
+	@echo "Built build dir"
+	@${MKDIR_P} ${BUILDDIR}
 
 ${TEST_BUILD_DIR}:
-	${MKDIR_P} ${TEST_BUILD_DIR}
+	@echo "Built test build dir"
+	@${MKDIR_P} ${TEST_BUILD_DIR}
 
 #################
 
-
-
 run_tests: tests
-	@echo "You might find it useful to write a script here"
+	@for test in ${TEST_CASES} ; do \
+		echo "Running test $$test" ; \
+		$$test ; \
+		echo "" ; \
+	done
 
 
 
@@ -102,4 +111,5 @@ clean:
 	rm -f ${TEST_BUILD_DIR}/*.o *.out
 	rmdir ${TEST_BUILD_DIR}
 	rmdir ${BUILDDIR}
-	rm ${TEST_CASES}
+	rm -f ${TEST_CASES}
+	
