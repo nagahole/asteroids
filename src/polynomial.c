@@ -1,4 +1,5 @@
 #include "polynomial.h"
+#include "maths.h"
 
 /* polynomial_create
  */
@@ -33,14 +34,9 @@ float polynomial_evaluate(void* polynomial, int t)
     for (int i = 0; i < n_elements; i++) 
     {
         float coefficient = ((float*) polynomial)[i + 1];
-        float buf = coefficient;
+        float t_pow = flatland_pow(t, n_elements - 1 - i);
 
-        //Basically pow(polynomial[i + 1], n_elements - 1)
-        for (int j = 0; j < n_elements - 2 - j; j++) {
-            buf *= coefficient;
-        }
-
-        res += buf;
+        res += coefficient * t_pow;
     }
 
     return res;

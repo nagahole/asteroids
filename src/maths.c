@@ -25,18 +25,21 @@ double flatland_cos(float x)
 
 double flatland_sqrt(float x)
 {
-    // OPTIONAL: TODO
-    return 1;
+    double r = x / 2;
+
+    for ( int i = 0; i < 10; i++ ) 
+    {
+            r = (r + x / r) / 2;
+    }
+
+    return r;
 }
 
 double flatland_pow(float base, int power) 
 {
-    if (power == 0)
-        return 1;
-
     float absolute = 1;
 
-    for (int i = 0; i < (int) flatland_abs(power); i++) 
+    for (int i = 0; i < flatland_abs(power); i++) 
     {
         absolute *= base;
     }

@@ -4,7 +4,11 @@
 #include "polynomial.h"
 #include "maths.h"
 
-#define SIZEOF_ASTEROID (1) // TODO
+#define SIZEOF_ASTEROID (4 * 100)
+
+// Time of an asteroid is set to this value when it is cleared
+#define ASTEROID_CLEARED_VALUE -1
+
 /*
  * asteroid_create
  * Creates an asteroid
@@ -12,6 +16,14 @@
  * :: fx_args    :: The polynomial for the x coordinates
  * :: fy_args    :: The polynomial fo rthe y coordinates 
  * Acts in place.
+ *
+ * Format of asteroid:
+ * - First 4 bytes: time t (initiated at 0)
+ * - Second 4 bytes: tolerance
+ * - Third 4 bytes: Number of coefficients for x polynomial
+ * - Four+ chunks of 4 bytes: Coefficients of x polynomial
+ * - Next 4 byte: Number of coefficients for y polynomial
+ * - Next chunks of 4 bytes: Coefficients of y polynomial
  */
 void asteroid_create(
         void* data,

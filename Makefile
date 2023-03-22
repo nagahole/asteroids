@@ -3,7 +3,7 @@
 ###############################################
 
 CC := gcc
-CFLAGS := -Wall -Wvla -g
+CFLAGS := -Wall -Wvla -lm -std=c99
 
 ###############################################
 # Detect files and set paths accordingly
@@ -81,11 +81,9 @@ ${TEST_BUILD_DIR}/%.o: ${TEST_SRC_DIR}/%.c
 #################
 
 ${BUILDDIR}:
-	@echo "Built build dir"
 	@${MKDIR_P} ${BUILDDIR}
 
 ${TEST_BUILD_DIR}:
-	@echo "Built test build dir"
 	@${MKDIR_P} ${TEST_BUILD_DIR}
 
 #################
@@ -100,9 +98,9 @@ run_tests: tests
 #################
 
 clean:
-	rm -f ${BUILDDIR}/*.o *.out
-	rm -f ${TEST_BUILD_DIR}/*.o *.out
-	rmdir ${TEST_BUILD_DIR}
-	rmdir ${BUILDDIR}
-	rm -f ${TEST_CASES}
-	
+	@rm -f ${BUILDDIR}/*.o *.out
+	@rm -f ${TEST_BUILD_DIR}/*.o *.out
+	@rmdir ${TEST_BUILD_DIR}
+	@rmdir ${BUILDDIR}
+	@rm -f ${TEST_CASES}
+	@echo "Clean complete!"
