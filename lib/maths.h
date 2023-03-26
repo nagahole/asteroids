@@ -17,4 +17,6 @@ double flatland_abs(float n);
 
 double flatland_factorial(int n);
 
+double flatland_dist(float x1, float y1, float x2, float y2);
+
 #endif

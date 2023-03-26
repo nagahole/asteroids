@@ -126,10 +126,7 @@ float asteroid_cluster_scan(void* cluster, const float x, const float y)
             void* polynomial_y = (void*) (((int*) cluster) + offset + 3 + fx_args_count);
             float asteroid_y_pos = polynomial_evaluate(polynomial_y, time);
 
-            float dx = asteroid_x_pos - x;
-            float dy = asteroid_y_pos - y;
-
-            float distance = flatland_sqrt((dx * dx) + (dy * dy));
+            float distance = flatland_dist(asteroid_x_pos, asteroid_y_pos, x, y);
 
             if (
                 distance <= 1000 && 
@@ -187,10 +184,7 @@ void asteroid_cluster_intercept(
             void* polynomial_y = (void*) (((int*) asteroids) + offset + 3 + fx_args_count);
             float asteroid_y_pos = polynomial_evaluate(polynomial_y, time);
 
-            float dx = asteroid_x_pos - x;
-            float dy = asteroid_y_pos - y;
-
-            float distance = flatland_sqrt((dx * dx) + (dy * dy));
+            float distance = flatland_dist(asteroid_x_pos, asteroid_y_pos, x, y);
 
             if (distance <= tolerance)
             {

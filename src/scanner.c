@@ -1,5 +1,4 @@
 #include "scanner.h"
-#include <stdio.h>
 #define NULL ((void *) 0)
 
 // Constructor
@@ -47,7 +46,6 @@ int get_num_scanners(void* scanner)
 float* get_scanner_positions(void* scanner)
 {
     return ((float*) scanner) + 1;
-    return NULL;
 }
 
 

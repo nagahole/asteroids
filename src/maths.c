@@ -1,13 +1,22 @@
 #include "maths.h"
 
-// The following functions are suggestions
+#define SQRT_PRECISION 1000
+#define SIN_PRECISION 2 * 100
+
+double flatland_dist(float x1, float y1, float x2, float y2)
+{
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+
+    return flatland_sqrt(dx * dx + dy * dy);
+}
 
 double flatland_sin(float x)
 {
     double res = 0;
     double sign = 1;
 
-    for (int power = 1; power <= 20; power += 2, sign = -sign) 
+    for (int power = 1; power <= SIN_PRECISION; power += 2, sign = -sign) 
     {
         res += sign * (flatland_pow(x, power) / flatland_factorial(power));
     }
@@ -22,7 +31,6 @@ double flatland_cos(float x)
     return flatland_sin(x + PI / 2);
 }
 
-
 double flatland_sqrt(float x)
 {
     if (x == 0.0) {
@@ -31,7 +39,7 @@ double flatland_sqrt(float x)
 
     double r = x / 2;
 
-    for ( int i = 0; i < 10; i++ ) 
+    for ( int i = 0; i < SQRT_PRECISION; i++ ) 
     {
             r = (r + x / r) / 2;
     }
