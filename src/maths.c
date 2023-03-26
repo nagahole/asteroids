@@ -25,6 +25,10 @@ double flatland_cos(float x)
 
 double flatland_sqrt(float x)
 {
+    if (x == 0.0) {
+        return 0.0;
+    }
+
     double r = x / 2;
 
     for ( int i = 0; i < 10; i++ ) 

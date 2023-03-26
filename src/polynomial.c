@@ -1,5 +1,6 @@
 #include "polynomial.h"
 #include "maths.h"
+#include <stdio.h>
 
 /* polynomial_create
  */
@@ -12,6 +13,7 @@ void polynomial_create(
      * - First 4 bytes: int denoting number of coefficients
      * - Bytes in consecutive chunks of 4: Coefficients of elements
      */
+    
     ((int*) data)[0] = n_elements;
 
     for (int i = 0; i < n_elements; i++) 

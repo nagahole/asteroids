@@ -3,7 +3,7 @@
 
 #include "asteroid.h"
 
-#define SIZEOF_ASTEROID_CLUSTER(n) (n * SIZEOF_ASTEROID + 4 * (2)) // TODO 
+#define SIZEOF_ASTEROID_CLUSTER(n) (n * SIZEOF_ASTEROID + (4 * (2))) // TODO 
 
 /*
  * asteroid_cluster_create

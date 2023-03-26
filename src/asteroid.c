@@ -34,14 +34,14 @@ void asteroid_create(
 
     for(int i = 0; i < fx_args_count; i++) 
     {
-        ((float*) data)[3 + i] = ((float*) fx_args)[i];
+        ((float*) data)[3 + i] = ((float*) fx_args)[i + 1];
     }
 
     ((int*) data)[fx_args_count + 3] = fy_args_count;
     
     for(int i = 0; i < fy_args_count; i++)
     {
-        ((float*) data)[fx_args_count + 4 + i] = ((float*) fy_args)[i];
+        ((float*) data)[fx_args_count + 4 + i] = ((float*) fy_args)[i + 1];
     }
 
     return;

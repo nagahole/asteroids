@@ -2,7 +2,7 @@
 #define POLYNOMIAL_H 1
 
 // Defines the number of bytes needed to store a polynomial containing n_elements
-#define SIZEOF_POLYNOMIAL(n_elements) (n_elements * 4) // TODO
+#define SIZEOF_POLYNOMIAL(n_elements) (n_elements * 4 + 4) // TODO
 
 
 /* polynomial_create

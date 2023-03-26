@@ -2,7 +2,9 @@
 #define SCANNER_H 1
 
 #include "asteroid_cluster.h"
-#define SIZEOF_SCANNER(n) (1) // TODO
+// Don't know if this is a good implementation - using the later half of scanners array
+// to store data from scan
+#define SIZEOF_SCANNER(n) (4 * (2 * n + 1))
 /*
  * scanner_create
  * Creates a collection of scanners

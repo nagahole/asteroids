@@ -1,5 +1,5 @@
 #include "asteroid_cluster.h"
-
+#include <stdio.h>
 
 /*
  * asteroid_cluster_create
@@ -49,11 +49,13 @@ void asteroid_cluster_add_asteroid(void* cluster, void* poly_x, void* poly_y)
     int fx_args_count = ((int*) poly_x)[0];
     int fy_args_count = ((int*) poly_y)[0];
 
+    //Basically memcpy
     for (int i = 0; i < 4 + fx_args_count + fy_args_count; i++) 
     {
         // Even if the type isn't correct, the bits are still copied over correctly anyways
-        // Can use float too. Just need a 4 byte type
-        ((int*) cluster)[offset + i] = ((int*) asteroid)[i];
+        // Can use int too. Just need a 4 byte type
+        ((float*) cluster)[offset + i] = ((float*) asteroid)[i];
+
     }
 }
 
@@ -109,19 +111,19 @@ float asteroid_cluster_scan(void* cluster, const float x, const float y)
         { 
             //If asteroid not cleared, THEN check for position
 
-            void* asteroid = (void*) ((int*) cluster)[offset]; 
+            void* asteroid = (void*) (((int*) cluster) + offset); 
 
             if (asteroid_impact(asteroid))
             {
                 return -(0.0/0.0);
             }
 
-            void* polynomial_x = (void*) ((int*) cluster)[offset + 2];
+            void* polynomial_x = (void*) (((int*) cluster) + offset + 2);
             float asteroid_x_pos = polynomial_evaluate(polynomial_x, time);
 
             int fx_args_count = ((int*) cluster)[offset + 2];
 
-            void* polynomial_y = (void*) ((int*) cluster)[offset + 3 + fx_args_count];
+            void* polynomial_y = (void*) (((int*) cluster) + offset + 3 + fx_args_count);
             float asteroid_y_pos = polynomial_evaluate(polynomial_y, time);
 
             float dx = asteroid_x_pos - x;
@@ -159,6 +161,8 @@ void asteroid_cluster_intercept(
         const float x,
         const float y)
 {
+    asteroid_cluster_update(asteroids);
+
     float tolerance = ((float*) asteroids)[0];
     int asteroids_count = ((int*) asteroids)[2];
 
@@ -175,12 +179,12 @@ void asteroid_cluster_intercept(
         { 
             //If asteroid not cleared, THEN check for position
 
-            void* polynomial_x = (void*) ((int*) asteroids)[offset + 2];
+            void* polynomial_x = (void*) (((int*) asteroids) + offset + 2);
             float asteroid_x_pos = polynomial_evaluate(polynomial_x, time);
 
             int fx_args_count = ((int*) asteroids)[offset + 2];
 
-            void* polynomial_y = (void*) ((int*) asteroids)[offset + 3 + fx_args_count];
+            void* polynomial_y = (void*) (((int*) asteroids) + offset + 3 + fx_args_count);
             float asteroid_y_pos = polynomial_evaluate(polynomial_y, time);
 
             float dx = asteroid_x_pos - x;
@@ -222,7 +226,7 @@ int asteroid_cluster_impact(void* cluster)
 
             int fx_args_count = ((int*) cluster)[offset + 2];
 
-            void* polynomial_y = (void*) ((int*) cluster)[offset + 3 + fx_args_count];
+            void* polynomial_y = (void*) (((int*) cluster) + offset + 3 + fx_args_count);
             float asteroid_y_pos = polynomial_evaluate(polynomial_y, time);
 
             if (asteroid_y_pos <= 0)
@@ -256,13 +260,11 @@ void asteroid_cluster_update(void* cluster)
         { 
             //If asteroid not cleared, THEN update position
 
-            void* asteroid = (void*) ((int*) cluster)[offset]; 
+            void* asteroid = (void*) (((int*) cluster) + offset); 
 
             asteroid_update(asteroid);
         }
     }
-
-    return 0;
 }
 
 /*

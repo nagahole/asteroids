@@ -1,4 +1,5 @@
 #include "scanner.h"
+#include <stdio.h>
 #define NULL ((void *) 0)
 
 // Constructor
@@ -14,7 +15,12 @@ void scanner_create(
         const int n_scanners,
         float* scanner_pos)
 {
-    // TODO
+    ((int*) data)[0] = n_scanners;
+
+    for(int i = 0; i < n_scanners; i++) 
+    {
+        ((float*) data)[1 + i] = scanner_pos[i];
+    }
 }
 
 // Getters
@@ -27,8 +33,7 @@ void scanner_create(
  */
 int get_num_scanners(void* scanner)
 {
-    // TODO
-    return 0;
+    return ((int*) scanner)[0];
 }
 
 
@@ -41,7 +46,7 @@ int get_num_scanners(void* scanner)
  */
 float* get_scanner_positions(void* scanner)
 {
-    // TODO
+    return ((float*) scanner) + 1;
     return NULL;
 }
 
@@ -56,6 +61,23 @@ float* scan(
         void* scanners,
         void* asteroid_cluster)
 {
-    // TODO
-    return NULL;
+    asteroid_cluster_update(asteroid_cluster);
+
+    int scanners_count = ((int*) scanners)[0];
+
+    for (int i = 0; i < scanners_count; i++) 
+    {
+        float scanner_x_pos = ((float*) scanners)[1 + i];
+        float scan = asteroid_cluster_scan(asteroid_cluster, scanner_x_pos, 0);
+
+        ((float*) scanners)[i + scanners_count + 1] = scan;
+    }
+
+    /*
+     * I do not know any way around this. Right now what I'm doing is
+     * making the size of scanner 2x its normal size, and allocating
+     * the latter half of its memory to a distance array for scans
+     */
+
+    return ((float*) scanners) + scanners_count + 1;
 }
