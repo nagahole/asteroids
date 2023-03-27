@@ -4,6 +4,7 @@ int main()
 {
     asteroid_static();
     asteroid_linear();
+    printf("Test passed!\n");
     return 0;
 }
 

@@ -1,6 +1,12 @@
 #ifndef FLATLAND_H
 #define FLATLAND_H 1
 
+#ifdef DEBUG
+    #define DEBUG_PRINT(...) printf(__VA_ARGS__)
+#else
+    #define DEBUG_PRINT(...) 
+#endif
+
 #include "scanner.h"
 #include "asteroid_cluster.h"
 

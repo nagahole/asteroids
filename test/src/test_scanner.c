@@ -4,6 +4,7 @@ int main()
 {
     test_scanner_constructor();
     test_scan_static();
+    printf("Test passed!\n");
     return 0;
 }
 

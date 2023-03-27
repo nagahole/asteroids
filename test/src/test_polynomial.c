@@ -10,6 +10,7 @@ int main()
     test_monic();
     test_linear();
     test_quadratic();
+    printf("Test passed!\n");
     return 0;
 }
 

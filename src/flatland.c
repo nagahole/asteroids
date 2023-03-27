@@ -28,9 +28,6 @@ void flatland_protect(void* cluster, void* scanner)
 
                 if (triangulate(scanner_pos[i], dist[i], scanner_pos[j], dist[j], pos)) 
                 {
-                    //If intersection is detected
-                    printf("[%f, %f]\n", pos[0], pos[1]);
-
                     if (lowest_asteroid[1] == -1 || pos[1] < lowest_asteroid[1])
                     {
                         lowest_asteroid[0] = pos[0];
@@ -40,29 +37,42 @@ void flatland_protect(void* cluster, void* scanner)
             }
         }
 
-        if(last_pos[1] == -1)
+        if(lowest_asteroid[1] == -1)
         {
-            last_pos[0] = lowest_asteroid[0];
-            last_pos[1] = lowest_asteroid[1];
+            DEBUG_PRINT("NO INTERSECTION\n");
+            last_pos[0] = -1;
+            last_pos[1] = -1;
         }
         else
         {
-            if(flatland_dist(
-                last_pos[0], last_pos[1], lowest_asteroid[0], lowest_asteroid[1]
-            ) <= SAME_ASTEROID_TOLERANCE)
+            DEBUG_PRINT("LOWEST AST: [%f, %f]\n", lowest_asteroid[0], lowest_asteroid[1]);
+
+            if(last_pos[1] == -1)
             {
-                float dx = lowest_asteroid[0] - last_pos[0];
-                float dy = lowest_asteroid[1] - last_pos[1];
+                last_pos[0] = lowest_asteroid[0];
+                last_pos[1] = lowest_asteroid[1];
+            }
+            else
+            {
+                if(flatland_dist(
+                    last_pos[0], last_pos[1], lowest_asteroid[0], lowest_asteroid[1]
+                ) <= SAME_ASTEROID_TOLERANCE)
+                {
+                    float dx = lowest_asteroid[0] - last_pos[0];
+                    float dy = lowest_asteroid[1] - last_pos[1];
 
-                asteroid_cluster_intercept(cluster, lowest_asteroid[0] + dx, lowest_asteroid[1] + dy);
+                    asteroid_cluster_intercept(cluster, lowest_asteroid[0] + dx, lowest_asteroid[1] + dy);
 
-                last_pos[0] = -1;
-                last_pos[1] = -1;
+                    last_pos[0] = -1;
+                    last_pos[1] = -1;
+                }
+                else
+                {
+                    last_pos[0] = lowest_asteroid[0];
+                    last_pos[1] = lowest_asteroid[1];
+                }
             }
         }
-
-        
-
     }
 
     return;
