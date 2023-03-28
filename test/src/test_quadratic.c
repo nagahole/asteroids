@@ -5,11 +5,18 @@
 #include "polynomial.h"
 #include "test_quadratic.h"
 
+#define N_RANDOM_TESTS 10
+
 int main()
 {
     srand(time(NULL));
     test_quadratic();
-    test_quadratic_random();
+
+    for(int i = 0; i < N_RANDOM_TESTS; i++)
+    {
+        test_quadratic_random();
+    }
+
     printf("Test passed!\n");
     return 0;
 }
@@ -54,11 +61,11 @@ int test_quadratic_random()
     asteroid_cluster_create(data, QUADRATIC_N_AST, TOLERANCE); 
 
     void* poly_x[SIZEOF_POLYNOMIAL(3)];
-    float elements_x[3] = {n_random() * 2, n_random() * 8 - 4, n_random() * 200};
+    float elements_x[3] = {n_random() * 0.5, n_random() * 8 - 4, n_random() * 200 + 300};
     polynomial_create(poly_x, 3, elements_x);
 
     void* poly_y[SIZEOF_POLYNOMIAL(3)];
-    float elements_y[3] = {n_random() * -3, n_random() * 10, 1000};
+    float elements_y[3] = {n_random() * -0.8, n_random() * 5 - 3, 1000};
     polynomial_create(poly_y, 3, elements_y);
     
     asteroid_cluster_add_asteroid(data, poly_x, poly_y);

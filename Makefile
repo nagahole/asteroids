@@ -3,7 +3,7 @@
 ###############################################
 
 CC := gcc
-CFLAGS := -Wall -Wvla -std=c99 # -DDEBUG
+CFLAGS := -Wall -Wvla -std=c99 -DDEBUG
 
 ###############################################
 # Detect files and set paths accordingly

@@ -2,7 +2,11 @@
 #include <stdio.h>
 
 // Maximum distance an asteroid can move and still be considered the same asteroid
-#define SAME_ASTEROID_TOLERANCE 20
+// In other words, this is also the fastest moving asteroid flatland can detect
+#define SAME_ASTEROID_TOLERANCE 50
+
+// If the predicted position of an asteroid is within this tolerance, will intercept
+#define PREDICTION_TOLERANCE 2
 
 void flatland_protect(void* cluster, void* scanner)
 {
@@ -10,6 +14,7 @@ void flatland_protect(void* cluster, void* scanner)
     float* scanner_pos = get_scanner_positions(scanner);
 
     float last_pos[2] = { -1, -1 }; //a y value of -1 is impossible - so it's a safe default value
+    float predicted_pos[2] = { -1, -1 };
 
     // Cluster not clear and no impact
     while ( !asteroid_cluster_clear(cluster) 
@@ -39,9 +44,12 @@ void flatland_protect(void* cluster, void* scanner)
 
         if(lowest_asteroid[1] == -1)
         {
-            DEBUG_PRINT("NO INTERSECTION\n");
+            DEBUG_PRINT("X ");
             last_pos[0] = -1;
             last_pos[1] = -1;
+
+            predicted_pos[0] = -1;
+            predicted_pos[1] = -1;
         }
         else
         {
@@ -51,6 +59,9 @@ void flatland_protect(void* cluster, void* scanner)
             {
                 last_pos[0] = lowest_asteroid[0];
                 last_pos[1] = lowest_asteroid[1];
+
+                predicted_pos[0] = -1;
+                predicted_pos[1] = -1;
             }
             else
             {
@@ -61,15 +72,44 @@ void flatland_protect(void* cluster, void* scanner)
                     float dx = lowest_asteroid[0] - last_pos[0];
                     float dy = lowest_asteroid[1] - last_pos[1];
 
-                    asteroid_cluster_intercept(cluster, lowest_asteroid[0] + dx, lowest_asteroid[1] + dy);
+                    if(predicted_pos[0] == -1)
+                    {
+                        predicted_pos[0] = lowest_asteroid[0] + dx;
+                        predicted_pos[1] = lowest_asteroid[1] + dy;
 
-                    last_pos[0] = -1;
-                    last_pos[1] = -1;
+                        last_pos[0] = lowest_asteroid[0];
+                        last_pos[1] = lowest_asteroid[1];
+                    }
+                    else
+                    {
+                        float prediction_error[2] = {
+                            predicted_pos[0] - lowest_asteroid[0],
+                            predicted_pos[1] - lowest_asteroid[1]
+                        };
+
+                        // Prediction is within tolerance
+                        if (flatland_abs(prediction_error[0]) <= PREDICTION_TOLERANCE &&
+                            flatland_abs(prediction_error[1]) <= PREDICTION_TOLERANCE)
+                        {
+                            predicted_pos[0] = lowest_asteroid[0] + dx;
+                            predicted_pos[1] = lowest_asteroid[1] + dy;
+
+                            asteroid_cluster_intercept(cluster, predicted_pos[0], predicted_pos[1]);
+
+                            last_pos[0] = -1;
+                            last_pos[1] = -1;
+                        }
+                    }
+
+                    
                 }
                 else
                 {
                     last_pos[0] = lowest_asteroid[0];
                     last_pos[1] = lowest_asteroid[1];
+
+                    predicted_pos[0] = -1;
+                    predicted_pos[1] = -1;
                 }
             }
         }

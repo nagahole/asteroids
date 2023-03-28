@@ -1,7 +1,9 @@
 #include "maths.h"
+#include "flatland.h"
+#include <stdio.h>
 
-#define SQRT_PRECISION 1000
-#define SIN_PRECISION 2 * 100
+#define SQRT_PRECISION 10000
+#define SIN_PRECISION 2 * 10000
 
 double flatland_dist(float x1, float y1, float x2, float y2)
 {
