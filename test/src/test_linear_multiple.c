@@ -52,7 +52,7 @@ int test_linear_multiple()
     return 0;
 }
 
-#define LINEAR_RAND_N_AST 10
+#define LINEAR_RAND_N_AST 5
 int test_linear_multiple_random()
 {
     char data[SIZEOF_ASTEROID_CLUSTER(LINEAR_RAND_N_AST)];

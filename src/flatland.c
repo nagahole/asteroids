@@ -13,7 +13,13 @@ void flatland_protect(void* cluster, void* scanner)
     int n_scanners = get_num_scanners(scanner);
     float* scanner_pos = get_scanner_positions(scanner);
 
-    float last_pos[2][2] = { { -1, -1 }, { -1, -1 } }; 
+    vector2 last_pos[2];
+
+    last_pos[0].x = -1;
+    last_pos[0].y = -1;
+    last_pos[1].x = -1;
+    last_pos[1].y = -1;
+
     //a y value of -1 is impossible - so it's a safe default value
 
     // Cluster not clear and no impact
@@ -22,82 +28,82 @@ void flatland_protect(void* cluster, void* scanner)
     {
         float* dist = scan(scanner, cluster);
 
-        float lowest_asteroid[2] = { -1, -1 };
+        vector2 lowest_asteroid;
+        
+        lowest_asteroid.x = -1;
+        lowest_asteroid.y = -1;
 
         for(int i = 0; i < n_scanners - 1; i++)
         {
             for(int j = i + 1; j < n_scanners; j++)
             {
-                float pos[2];
+                vector2 pos;
 
-                if (triangulate(scanner_pos[i], dist[i], scanner_pos[j], dist[j], pos)) 
+                if (triangulate(scanner_pos[i], dist[i], scanner_pos[j], dist[j], &pos)) 
                 {
-                    if (lowest_asteroid[1] == -1 || pos[1] < lowest_asteroid[1])
+                    if (lowest_asteroid.x == -1 || pos.y < lowest_asteroid.y)
                     {
-                        lowest_asteroid[0] = pos[0];
-                        lowest_asteroid[1] = pos[1];
+                        lowest_asteroid = pos;
                     }
                 }
             }
         }
         
-        if (lowest_asteroid[0] == -1)
+        if (lowest_asteroid.x == -1)
         {
             //resets last two positions
             for(int i = 0; i < 2; i++)
             {
-                for(int j = 0; j < 2; j++)
-                {
-                    last_pos[i][j] = -1;
-                }
+                last_pos[i].x = -1;
+                last_pos[i].y = -1;
             }
             DEBUG_PRINT("x ");
         }
         else 
         {
-            DEBUG_PRINT("Lowest Ast: [%f, %f]\n", lowest_asteroid[0], lowest_asteroid[1]);
-            if (last_pos[0][0] == -1)
+            DEBUG_PRINT("Lowest Ast: [%f, %f]\n", lowest_asteroid.x, lowest_asteroid.y);
+            if (last_pos[0].x == -1)
             {
-                last_pos[0][0] = lowest_asteroid[0];
-                last_pos[0][1] = lowest_asteroid[1];
+                last_pos[0] = lowest_asteroid;
             }
-            else if (last_pos[1][0] == -1)
+            else if (last_pos[1].x == -1)
             {
-                last_pos[1][0] = last_pos[0][0];
-                last_pos[1][1] = last_pos[0][1];
-
-                last_pos[0][0] = lowest_asteroid[0];
-                last_pos[0][1] = lowest_asteroid[1];
+                last_pos[1] = last_pos[0];
+                last_pos[0] = lowest_asteroid;
             }
             else
             {
-                float deltas[2][2] = {
-                    { lowest_asteroid[0] - last_pos[0][0], lowest_asteroid[1] - last_pos[0][1] },
-                    { last_pos[0][0] - last_pos[1][0], last_pos[0][1] - last_pos[1][1] }
-                };
+                vector2 deltas[2];
 
-                float d_delta[2] = { deltas[0][0] - deltas[1][0], deltas[0][1] - deltas[1][1] };
+                deltas[0].x = lowest_asteroid.x - last_pos[0].x;
+                deltas[0].y = lowest_asteroid.y - last_pos[0].y;
+
+                deltas[1].x = last_pos[0].x - last_pos[1].x;
+                deltas[1].y = last_pos[0].y - last_pos[1].y;
+
+                vector2 d_delta;
+
+                d_delta.x = deltas[0].x - deltas[1].x;
+                d_delta.y = deltas[0].y - deltas[1].y;
 
                 // predicted delta is most recent delta + change in delta
-                float predicted_delta[2] = { 
-                    deltas[0][0] + d_delta[0],
-                    deltas[0][1] + d_delta[1]
-                };
+                vector2 predicted_delta;
 
-                float predicted_pos[2] = {
-                    lowest_asteroid[0] + predicted_delta[0],
-                    lowest_asteroid[1] + predicted_delta[1]
-                };
+                predicted_delta.x = deltas[0].x + d_delta.x;
+                predicted_delta.y = deltas[0].y + d_delta.y;
 
-                asteroid_cluster_intercept(cluster, predicted_pos[0], predicted_pos[1]);
+                vector2 predicted_pos;
+
+                predicted_pos.x = lowest_asteroid.x + predicted_delta.x;
+                predicted_pos.y = lowest_asteroid.y + predicted_delta.y;
+
+                asteroid_cluster_intercept(cluster, predicted_pos.x, predicted_pos.y);
 
                 //resets last two positions
                 for(int i = 0; i < 2; i++)
                 {
-                    for(int j = 0; j < 2; j++)
-                    {
-                        last_pos[i][j] = -1;
-                    }
+                    last_pos[i].x = -1;
+                    last_pos[i].y = -1;
                 }
             }
         }
@@ -106,7 +112,7 @@ void flatland_protect(void* cluster, void* scanner)
     return;
 }
 
-int triangulate(float s1_pos, float s1_dist, float s2_pos, float s2_dist, float* pos) {
+int triangulate(float s1_pos, float s1_dist, float s2_pos, float s2_dist, vector2* pos) {
     float centerdx = s1_pos - s2_pos;
 
     float R = flatland_abs(centerdx);
@@ -133,12 +139,12 @@ int triangulate(float s1_pos, float s1_dist, float s2_pos, float s2_dist, float*
     float iy1 = gy;
     float iy2 = -gy;
 
-    pos[0] = ix;
+    pos->x = ix;
 
     if (iy1 > iy2)
-        pos[1] = iy1;
+        pos->y = iy1;
     else
-        pos[1] = iy2;
+        pos->y = iy2;
 
     return 1;
 }

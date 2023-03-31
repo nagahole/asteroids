@@ -195,7 +195,7 @@ void asteroid_cluster_intercept(
 
             float distance = flatland_dist(asteroid_x_pos, asteroid_y_pos, x, y);
 
-            if (distance <= tolerance)
+            if (distance <= tolerance && asteroid_y_pos > 0)
             {
                 //Sets time to asteroid_cleared_value
                 DEBUG_PRINT("HIT!\n");
