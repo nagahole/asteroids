@@ -68,7 +68,7 @@ double flatland_abs(float n)
 {
     if (n > 0)
         return n;
-    else;
+    else
         return -n;
 }
 

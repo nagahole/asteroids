@@ -98,7 +98,6 @@ float asteroid_cluster_scan(void* cluster, const float x, const float y)
     int asteroids_count = ((int*) cluster)[2];
 
     float closest_distance = -1;
-    float closest_ast[2] = { -1, -1 };
 
     for(int i = 0; i < asteroids_count; i++) 
     {
@@ -136,8 +135,6 @@ float asteroid_cluster_scan(void* cluster, const float x, const float y)
             ) 
             {
                 closest_distance = distance;
-                closest_ast[0] = asteroid_x_pos;
-                closest_ast[1] = asteroid_y_pos;
             }
         }
     }
@@ -146,7 +143,6 @@ float asteroid_cluster_scan(void* cluster, const float x, const float y)
         return 1.0 / 0.0; // inf
     else 
     {   
-        //DEBUG_PRINT("[%f, %f] Actual Pos\n", closest_ast[0], closest_ast[1]);
         return closest_distance;
     }
 }
