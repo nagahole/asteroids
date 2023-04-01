@@ -3,7 +3,7 @@
 
 // Maximum distance an asteroid can move and still be considered the same asteroid
 // In other words, this is also the fastest moving asteroid flatland can detect
-#define SAME_ASTEROID_TOLERANCE 99999
+#define SAME_ASTEROID_TOLERANCE 999999
 
 // If the predicted position of an asteroid is within this tolerance, will intercept
 #define PREDICTION_TOLERANCE 2
