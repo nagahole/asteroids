@@ -112,7 +112,6 @@ char asteroid_intercept(
     return intercepted;
 }
 
-
 /*
  * asteroid_distance
  * :: void* asteroid ::
