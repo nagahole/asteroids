@@ -4,4 +4,6 @@
 int test_monic();
 int test_linear();
 int test_quadratic();
+
+int test_polynomial();
 #endif
