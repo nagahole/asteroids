@@ -6,7 +6,7 @@ int main()
     return 0;
 }
 
-#define POLY_SIZE_Y 3
+#define POLY_SIZE_Y 2
 #define POLY_SIZE_X 2
 #define N_AST 6
 #define TOLERANCE 1
