@@ -4,7 +4,7 @@
 #ifdef DEBUG
     #define DEBUG_PRINT(...) printf(__VA_ARGS__)
 #else
-    #define DEBUG_PRINT(x, y) 
+    #define DEBUG_PRINT(...) 
 #endif
 
 #define FLOAT_CMP(x, y, eps) ((x - y) * (x - y) < eps * eps) 

@@ -7,8 +7,9 @@
 #include "asteroid_cluster.h"
 
 
-void asteroid_static();
-void asteroid_linear();
-
+void test_asteroid_static();
+void test_asteroid_linear();
+void test_asteroid_lots();
+void test_asteroid_impact();
 
 #endif
