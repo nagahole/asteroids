@@ -8,7 +8,7 @@ int main()
 
 #define TOLERANCE 1
 #define LINEAR_POLY 2
-#define N_AST 1
+#define N_AST 2
 void test_asteroid_impact()
 {
     // Create cluster object
