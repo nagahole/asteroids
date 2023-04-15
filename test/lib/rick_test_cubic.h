@@ -1,5 +1,5 @@
-#ifndef TEST_HIGH_ORDER_H
-#define TEST_HIGH_ORDER_H 1
+#ifndef TEST_QUADRATIC_H
+#define TEST_QUADRATIC_H 1
 
 #include "test.h"
 
@@ -7,7 +7,6 @@
 #include "asteroid_cluster.h"
 #include "flatland.h"
 
-int test_high_order();
-double n_random();
+int test_cubic();
 
 #endif

@@ -8,7 +8,5 @@
 #include "flatland.h"
 
 int test_linear_multiple();
-int test_linear_multiple_random();
-double n_random();
 
 #endif

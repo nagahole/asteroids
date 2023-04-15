@@ -8,7 +8,5 @@
 #include "flatland.h"
 
 int test_quadratic();
-int test_quadratic_random();
-double n_random();
 
 #endif

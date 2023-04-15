@@ -1,5 +1,5 @@
-#ifndef TEST_QUADRATIC_H
-#define TEST_QUADRATIC_H 1
+#ifndef TEST_CLUSTER_H
+#define TEST_CLUSTER_H 1
 
 #include "test.h"
 
@@ -7,7 +7,6 @@
 #include "asteroid_cluster.h"
 #include "flatland.h"
 
-int test_cubic();
-double n_random();
+int test_linear();
 
 #endif
