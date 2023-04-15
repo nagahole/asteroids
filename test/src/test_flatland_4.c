@@ -21,7 +21,7 @@ void flatland_test()
     char poly_x[SIZEOF_POLYNOMIAL(POLY_SIZE_X)];
     char poly_y[SIZEOF_POLYNOMIAL(POLY_SIZE_Y)];
     float poly_vals_x[POLY_SIZE_X] = {10, 0};
-    float poly_vals_y[POLY_SIZE_Y] = {2, -50, 1001};
+    float poly_vals_y[POLY_SIZE_Y] = {2, -100, 1001};
 
     polynomial_create(poly_x, POLY_SIZE_X, poly_vals_x);
     polynomial_create(poly_y, POLY_SIZE_Y, poly_vals_y);

@@ -21,7 +21,7 @@ void flatland_two_asteroids()
     char poly_x_a[SIZEOF_POLYNOMIAL(POLY_SIZE_X)];
     char poly_y_a[SIZEOF_POLYNOMIAL(POLY_SIZE_Y)];
     float poly_vals_x_a[POLY_SIZE_X] = {1, 0};
-    float poly_vals_y_a[POLY_SIZE_Y] = {2, -50, 1001};
+    float poly_vals_y_a[POLY_SIZE_Y] = {2, -100, 1001};
 
     char poly_x_b[SIZEOF_POLYNOMIAL(POLY_SIZE_X)];
     char poly_y_b[SIZEOF_POLYNOMIAL(POLY_SIZE_Y)];
