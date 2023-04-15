@@ -1,8 +1,8 @@
 #include "rick_test_high_order.h"
 
-#define POLY_SIZE 6
-#define X_COEFFICIENTS { 0, 0, 0, -0.02, 1, 0 }
-#define Y_COEFFICIENTS { -0.002, 0.1, -1.25, 0.8, -25, 1000 }
+#define POLY_SIZE 10
+#define X_COEFFICIENTS { 0, 0, 0, 0, 0, 0, 1, -1, 20, 0 }
+#define Y_COEFFICIENTS { -0.0000835, 0.00118, -0.0033, -0.0101, 0.025, 0.0005, 0.1, -0.2, 0.05, 1000 }
 #define SCANNER_POSITIONS { 0, 200, 400, 600, 800 }
 
 int main()

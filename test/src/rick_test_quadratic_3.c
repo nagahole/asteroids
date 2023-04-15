@@ -1,7 +1,7 @@
 #include "rick_test_quadratic.h"
 
-#define X_COEFFICIENTS { 1, -4, 20 }
-#define Y_COEFFICIENTS { -1, 2, 1000 }
+#define X_COEFFICIENTS { 1, 1, 0 }
+#define Y_COEFFICIENTS { 10, -200.05, 1000 }
 #define SCANNER_POSITIONS { 0, 200, 400, 600, 800 }
 
 int main()
