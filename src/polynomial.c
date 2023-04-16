@@ -36,6 +36,8 @@ float polynomial_evaluate(void* polynomial, int t)
     for (int i = 0; i < n_elements; i++) 
     {
         float coefficient = ((float*) polynomial)[i + 1];
+
+        // t_pow is time to the power of its order in the polynomial
         float t_pow = flatland_pow(t, n_elements - 1 - i);
 
         res += coefficient * t_pow;

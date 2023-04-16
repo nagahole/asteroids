@@ -73,7 +73,7 @@ int asteroid_impact(void* asteroid)
 
     int fx_args_count = ((int*) asteroid)[2];
 
-    //cast to int so can jump in bytes of 4 using square bracket notation
+    // Cast to int so can jump in bytes of 4
     void* y_polynomial= (void*) ((int*) asteroid + 3 + fx_args_count); 
 
     return polynomial_evaluate(y_polynomial, time) <= 0;
@@ -106,6 +106,7 @@ char asteroid_intercept(
 
     if (intercepted)
     {
+        // Sets asteroid's time value to asteroid cleared value
         ((int*) asteroid)[0] = ASTEROID_CLEARED_VALUE;
     }
 
@@ -134,8 +135,5 @@ float asteroid_distance(
     void* y_polynomial = (void*) ((int*) asteroid + 3 + fx_args_count);
     float asteroid_y_pos = polynomial_evaluate(y_polynomial, time);
 
-    float dx = asteroid_x_pos - x;
-    float dy = asteroid_y_pos - y;
-
-    return flatland_sqrt((dx * dx) + (dy * dy));
+    return flatland_dist(asteroid_x_pos, asteroid_y_pos, x, y);
 }

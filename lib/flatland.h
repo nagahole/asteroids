@@ -26,10 +26,10 @@ typedef struct
 } vector2;
 
 /*
- * triangulate
+ * find_intersection
  * Returns 1 if there is a point of intersection between the two scans
  * else 0
  */
-int triangulate(float s1_pos, float s1_dist, float s2_pos, float s2_dist, vector2* res);
+int find_intersection(float s1_pos, float s1_dist, float s2_pos, float s2_dist, vector2* res);
 
 #endif

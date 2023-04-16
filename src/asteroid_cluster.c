@@ -11,7 +11,8 @@
  * 
  * Formatting of asteroid clusters:
  * - First 4 bytes: Tolerance of all the asteroids in the cluster
- * - Second 4 bytes: The number of asteroids there are
+ * - Second 4 bytes: Max number of asteroids that can be stored
+ * - Third 4 bytes: Number of asteroids actually stored
  * - Next chunks of 4 bytes: Asteroid data
  */
 void asteroid_cluster_create(
@@ -36,7 +37,7 @@ void asteroid_cluster_create(
  */
 void asteroid_cluster_add_asteroid(void* cluster, void* poly_x, void* poly_y)
 {
-    int arr[SIZEOF_ASTEROID / 4]; //Helper array to help allocate space for the void pointer
+    int arr[SIZEOF_ASTEROID / 4]; // Helper array to help allocate space for the void pointer
     void* asteroid = &arr;
 
     asteroid_create(asteroid, ((float*) cluster)[0], poly_x, poly_y);
@@ -46,6 +47,7 @@ void asteroid_cluster_add_asteroid(void* cluster, void* poly_x, void* poly_y)
 
     // divide by 4 to get offset in chunks of 4 bytes
     int offset = 3 + (asteroids_stored * (SIZEOF_ASTEROID / 4)); 
+    // + 3 accounts for the 3 values stored in the cluster
 
     int fx_args_count = ((int*) poly_x)[0];
     int fy_args_count = ((int*) poly_y)[0];
@@ -116,7 +118,7 @@ float asteroid_cluster_scan(void* cluster, const float x, const float y)
 
             if (asteroid_impact(asteroid))
             {
-                return -(0.0/0.0);
+                return -(0.0/0.0); // NaN
             }
 
             void* polynomial_x = (void*) (((int*) cluster) + offset + 2);
@@ -139,7 +141,7 @@ float asteroid_cluster_scan(void* cluster, const float x, const float y)
         }
     }
 
-    if (closest_distance == -1) // IE no asteroids within 1000 units
+    if (closest_distance == -1) // If no asteroids within 1000 units
         return 1.0 / 0.0; // inf
     else 
     {   
