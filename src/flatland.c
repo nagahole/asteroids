@@ -33,12 +33,15 @@ void flatland_protect(void* cluster, void* scanner)
         lowest_asteroid.x = -1;
         lowest_asteroid.y = -1;
 
+        // Finds the lowest asteroid
+
         for(int i = 0; i < n_scanners - 1; i++)
         {
             for(int j = i + 1; j < n_scanners; j++)
             {
                 vector2 pos;
 
+                // If intersection of two circles detected
                 if (triangulate(scanner_pos[i], dist[i], scanner_pos[j], dist[j], &pos)) 
                 {
                     if (lowest_asteroid.x == -1 || pos.y < lowest_asteroid.y)
@@ -49,9 +52,10 @@ void flatland_protect(void* cluster, void* scanner)
             }
         }
         
+        // No asteroids detected
         if (lowest_asteroid.x == -1)
         {
-            //resets last two positions
+            // Resets last two positions
             for(int i = 0; i < 2; i++)
             {
                 last_pos[i].x = -1;
@@ -71,7 +75,7 @@ void flatland_protect(void* cluster, void* scanner)
                 last_pos[1] = last_pos[0];
                 last_pos[0] = lowest_asteroid;
             }
-            else
+            else // Last two positions are recorded
             {
                 vector2 deltas[2];
 
@@ -99,7 +103,7 @@ void flatland_protect(void* cluster, void* scanner)
 
                 asteroid_cluster_intercept(cluster, predicted_pos.x, predicted_pos.y);
 
-                //resets last two positions
+                // Resets last two positions
                 for(int i = 0; i < 2; i++)
                 {
                     last_pos[i].x = -1;
@@ -112,6 +116,8 @@ void flatland_protect(void* cluster, void* scanner)
     return;
 }
 
+// Code translated mathematically and repurposed from
+// https://math.stackexchange.com/questions/256100/how-can-i-find-the-points-at-which-two-circles-intersect
 int triangulate(float s1_pos, float s1_dist, float s2_pos, float s2_dist, vector2* pos) {
     float centerdx = s1_pos - s2_pos;
 

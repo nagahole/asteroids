@@ -1,7 +1,6 @@
 #include "scanner.h"
 #define NULL ((void *) 0)
 
-// Constructor
 /*
  * scanner_create
  * Constructor for the scanner object
