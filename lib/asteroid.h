@@ -4,7 +4,8 @@
 #include "polynomial.h"
 #include "maths.h"
 
-#define SIZEOF_ASTEROID (4 * 1000)
+// ASSUMES MAX 49th ORDER POLYNOMIALS
+#define SIZEOF_ASTEROID (4 * 100)
 
 // Time of an asteroid is set to this value when it is cleared
 #define ASTEROID_CLEARED_VALUE -1

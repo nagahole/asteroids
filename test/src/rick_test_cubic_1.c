@@ -7,8 +7,6 @@
 int main()
 {
     test_cubic();
-
-    printf("Test passed!\n");
     return 0;
 }
 

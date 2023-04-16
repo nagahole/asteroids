@@ -16,23 +16,23 @@ int test_quadratic_multiple()
 
     // Asteroid 1
     void* poly_x[SIZEOF_POLYNOMIAL(3)];
-    float elements_x[3] = { -1, 20, 500 };
+    float elements_x[3] = { 0.5, 0, 0 };
     polynomial_create(poly_x, 3, elements_x);
 
     void* poly_y[SIZEOF_POLYNOMIAL(3)];
-    float elements_y[3] = { -1, 1, 1000};
+    float elements_y[3] = { 1, -63.4, 1000};
     polynomial_create(poly_y, 3, elements_y);
     
     asteroid_cluster_add_asteroid(data, poly_x, poly_y);
 
     // Asteroid 2
-    elements_x[0] = 1;
-    elements_x[1] = -5;
-    elements_x[2] = 100;
+    elements_x[0] = -0.5;
+    elements_x[1] = 0;
+    elements_x[2] = 800;
     polynomial_create(poly_x, 3, elements_x);
 
     elements_y[0] = 1;
-    elements_y[1] = -70;
+    elements_y[1] = -63.4;
     elements_y[2] = 1000;
     polynomial_create(poly_y, 3, elements_y);
     

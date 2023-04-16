@@ -7,7 +7,6 @@
 int main()
 {
     test_linear();
-    printf("Test passed!\n");
     return 0;
 }
 

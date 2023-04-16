@@ -3,7 +3,6 @@
 int main()
 {
     test_linear_multiple();
-    printf("Test passed!\n");
     return 0;
 }
  

@@ -8,8 +8,6 @@
 int main()
 {
     test_high_order();
-
-    printf("Test passed!\n");
     return 0;
 }
 
